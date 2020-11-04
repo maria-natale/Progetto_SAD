@@ -1,0 +1,10 @@
+#media vittime in italia
+utenti_campani=(Vittime_per_regione_e_anno[1:22,2])
+print(utenti_campani)
+mediavittimeitalia=c(mean(Vittime_per_regione_e_anno[1:22,2]),mean(Vittime_per_regione_e_anno[1:22,3]),mean(Vittime_per_regione_e_anno[1:22,4]),mean(Vittime_per_regione_e_anno[1:22,5]),mean(Vittime_per_regione_e_anno[1:22,6]),mean(Vittime_per_regione_e_anno[1:22,7]),mean(Vittime_per_regione_e_anno[1:22,8]),mean(Vittime_per_regione_e_anno[1:22,9]))
+print(z)
+plot(utenti,type="b",col="green",ylim=c(min(mediavittimeitalia),max(utenti)),lwd=2, pch=15)
+lines(mediavittimeitalia,type="b",col="red",lwd=2, pch=15)
+linetype <- c(1:2)
+title("Dati vittime", "media italiana vs numeri campani,verde per gli utenti campani,rosso per la media nazionale")
+save.image(file="confronto campania italia")
