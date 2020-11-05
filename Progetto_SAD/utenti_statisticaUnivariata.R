@@ -1,13 +1,16 @@
 #prendo i dati relativi alla Campania e la media nazionale degli utenti negli anni
-matrixUtenti<-as.matrix(utenti_per_regione_e_anno)
-for (i in 1:dim(matrixUtenti)[1]){
-  if (matrixUtenti[i,1]=="Campania"){
-    utenti_campania<-as.numeric(matrixUtenti[i, 2:dim(matrixUtenti)[2]])
+#matrixUtenti<-as.matrix(utenti_per_regione_e_anno)
+
+for (i in 1:dim(utenti_per_regione_e_anno)[1]){
+  if (utenti_per_regione_e_anno[i,1]=="Campania"){
+    utenti_campania<-as.numeric(utenti_per_regione_e_anno[i, 2:dim(matrixUtenti)[2]])
   }
-  if (matrixUtenti[i,1]=="Media nazionale"){
-    utenti_nazione<-as.numeric(matrixUtenti[i, 2:dim(matrixUtenti)[2]])
+  if (utenti_per_regione_e_anno[i,1]=="Media nazionale"){
+    utenti_nazione<-as.numeric(utenti_per_regione_e_anno[i, 2:dim(matrixUtenti)[2]])
   }
 }
+
+matrixNumeric<-as.matrix(utenti_per_regione_e_anno[,2:dim(utenti_per_regione_e_anno)[2]])
 utenti_nazione<-round(utenti_nazione,0)
 
 #creo barplot per Campania e media nazionale
@@ -23,20 +26,90 @@ x<-barplot(utenti_nazione, xlab="Anni", ylab="Numero di chiamate effettuate", yl
 text(x, y=utenti_nazione, pos = 3, labels = utenti_nazione, col="red")
 dev.off()
 
-#unisco i due boxplot su un unico grafico per confrontarli
-png("grafici/barplotUtentiConfrontoItaliaCampania.png")
+#funzione di distribuzione continua 
+minOsservazione = min(matrixNumeric)
+maxOsservazione = max(matrixNumeric)
+classe<-round((maxOsservazione-minOsservazione)/3, digits=0)
+classi<-c(minOsservazione, minOsservazione+classe, minOsservazione+2*classe, maxOsservazione)
+frelclassi <-table (cut (utenti_campania, breaks = classi,right = FALSE ))/ length (utenti_campania)
+Fcum <-cumsum (frelclassi)
+num<-0;
+for (i in 1:length(utenti_campania)){
+  if(utenti_campania[i]==maxOsservazione)
+    num<-num+1
+}
+if (num>0){
+  Fcum [3] <-Fcum [3]+ num/length(utenti_campania)
+}
+
+
+frelclassiItalia <-table (cut (utenti_nazione, breaks = classi,right = FALSE ))/ length (utenti_nazione)
+FcumI <-cumsum (frelclassiItalia)
+for (i in 1:length(utenti_nazione)){
+  if(utenti_nazione[i]==maxOsservazione)
+    num<-num+1
+}
+if (num>0){
+  FcumI [3] <-FcumI [3]+ num/length(utenti_nazione)
+}
+png("grafici/funzionedidistribuzioneCampania.png")
+ascisse<-c(0, classi, maxOsservazione+100)
+ordinate <-c(0, 0, Fcum [1:3] ,1)
+plot(ascisse , ordinate , type = "b", axes = FALSE , main = "
+Funzione di distribuzione empirica continua Campania", col =" blue ",ylim=c(0 ,1) ,xlab="x",ylab="F(x)")
+axis (1, format(ascisse, digits=2))
+axis (2, format(Fcum, digits=2))
+box()
+dev.off()
+png("grafici/funzionedidistribuzioneItalia.png")
+ascisse<-c(0, classi, maxOsservazione+100)
+ordinate <-c(0, 0, FcumI [1:3] ,1)
+plot(ascisse , ordinate , type = "b", axes = FALSE , main = "
+Funzione di distribuzione empirica continua Italia", col =" red ",ylim=c(0 ,1) ,xlab="x",ylab="F(x)")
+axis (1, format(ascisse, digits=2))
+axis (2, format(FcumI, digits=2))
+box()
+dev.off()
+
+
+
+
+
+#unisco i due barplot su un unico grafico per confrontarli
+png("grafici/plotUtentiConfrontoItaliaCampania.png")
 par(mfrow=c(2,1))
 plot(utenti_nazione, col="red", xaxt='n')
 lines(utenti_nazione, col="red")
 axis(1, at=1:8, labels=colnames)
 plot(utenti_campania, col="blue", xaxt='n')
-lines(utenti_campania, col="red")
+lines(utenti_campania, col="blue")
 axis(1, at=1:8, labels=colnames)
 dev.off()
 
 #calcolo i quantili e la media dei due vettori di dati
 summary(utenti_campania)
 summary(utenti_nazione)
+
+#confronto istogrammi e ricavo la moda
+fclassiCampania <-table (cut (utenti_campania, breaks = classi,right = FALSE, dig.lab = 10))
+for (i in 1:length(utenti_campania)){
+  if(utenti_campania[i]==maxOsservazione)
+    fclassiCampania[3]<-fclassiCampania[3]+1
+}
+fclassiItalia <-table (cut (utenti_nazione, breaks = classi,right = FALSE, dig.lab=10))
+for (i in 1:length(utenti_nazione)){
+  if(utenti_nazione[i]==maxOsservazione)
+    fclassiItalia[3]<-fclassiItalia[3]+1
+}
+
+png("grafici/istogrammaClassiCampania.png")
+barplot(fclassiCampania, main="Istogramma delle frequenze delle classi in Campania", col=rainbow(3))
+dev.off()
+png("grafici/istogrammaClassiItalia.png")
+barplot(fclassiItalia, main="Istogramma delle frequenze delle classi in Italia", col=rainbow(3))
+dev.off()
+
+
 
 #confronto i due boxplot
 png("grafici/boxplotUtentiConfrontoItaliaCampania.png")
@@ -45,6 +118,13 @@ boxplot(utenti_nazione, col="red", main="Boxplot utenti in Italia")
 boxplot(utenti_campania, col="blue", main="Boxplot utenti in Campania")
 dev.off()
 
-
+var(utenti_campania)
+sd(utenti_campania)
+coefficienteVariazioneCampania<-sd(utenti_campania)/abs(mean(utenti_campania))
+coefficienteVariazioneCampania
+var(utenti_nazione)
+sd(utenti_nazione)
+coefficienteVariazioneItalia<-sd(utenti_nazione)/abs(mean(utenti_nazione))
+coefficienteVariazioneItalia
 
 
