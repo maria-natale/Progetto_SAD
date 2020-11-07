@@ -1,0 +1,14 @@
+var(utenti)
+[1] 32884.41
+> sd(utenti)
+[1] 181.3406
+> coefficienteVariazioneCampania=sd(utenti)/abs(mean(utenti))
+> coefficienteVariazioneCampania
+[1] 0.4336995
+> var(mediavittimeitalia)
+[1] 3954.902
+> sd(mediavittimeitalia)
+[1] 62.88801
+> coefficienteVariazioneItalia=sd(mediavittimeitalia)/abs(mean(mediavittimeitalia))
+> coefficienteVariazioneItalia
+[1] 0.3899619
