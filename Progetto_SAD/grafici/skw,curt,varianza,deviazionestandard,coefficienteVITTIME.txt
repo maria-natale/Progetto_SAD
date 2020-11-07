@@ -12,3 +12,13 @@ var(utenti)
 > coefficienteVariazioneItalia=sd(mediavittimeitalia)/abs(mean(mediavittimeitalia))
 > coefficienteVariazioneItalia
 [1] 0.3899619
+
+ skw(utenti)
+[1] 0.8126429
+> skw(mediavittimeitalia)
+[1] 0.8410663
+> 
+> curt(utenti)
+[1] -0.7215766
+> curt(mediavittimeitalia)
+[1] -0.9292483
