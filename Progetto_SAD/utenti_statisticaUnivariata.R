@@ -1,6 +1,7 @@
 #prendo i dati relativi alla Campania e la media nazionale degli utenti negli anni
 #matrixUtenti<-as.matrix(utenti_per_regione_e_anno)
 
+round(utenti_per_regione_e_anno[,-1],0)
 for (i in 1:dim(utenti_per_regione_e_anno)[1]){
   if (utenti_per_regione_e_anno[i,1]=="Campania"){
     utenti_campania<-as.numeric(utenti_per_regione_e_anno[i, 2:dim(matrixUtenti)[2]])
@@ -27,8 +28,8 @@ text(x, y=utenti_nazione, pos = 3, labels = utenti_nazione, col="red")
 dev.off()
 
 #funzione di distribuzione continua 
-minOsservazione = min(matrixNumeric)
-maxOsservazione = max(matrixNumeric)
+minOsservazione = min(utenti_campania)
+maxOsservazione = max(utenti_campania)
 classe<-round((maxOsservazione-minOsservazione)/3, digits=0)
 classi<-c(minOsservazione, minOsservazione+classe, minOsservazione+2*classe, maxOsservazione)
 frelclassi <-table (cut (utenti_campania, breaks = classi,right = FALSE ))/ length (utenti_campania)
@@ -41,17 +42,6 @@ for (i in 1:length(utenti_campania)){
 if (num>0){
   Fcum [3] <-Fcum [3]+ num/length(utenti_campania)
 }
-
-
-frelclassiItalia <-table (cut (utenti_nazione, breaks = classi,right = FALSE ))/ length (utenti_nazione)
-FcumI <-cumsum (frelclassiItalia)
-for (i in 1:length(utenti_nazione)){
-  if(utenti_nazione[i]==maxOsservazione)
-    num<-num+1
-}
-if (num>0){
-  FcumI [3] <-FcumI [3]+ num/length(utenti_nazione)
-}
 png("grafici/funzionedidistribuzioneCampania.png")
 ascisse<-c(0, classi, maxOsservazione+100)
 ordinate <-c(0, 0, Fcum [1:3] ,1)
@@ -61,6 +51,23 @@ axis (1, format(ascisse, digits=2))
 axis (2, format(Fcum, digits=2))
 box()
 dev.off()
+
+
+minOsservazione = min(utenti_nazione)
+maxOsservazione = max(utenti_nazione)
+classe<-round((maxOsservazione-minOsservazione)/3, digits=0)
+classi<-c(minOsservazione, minOsservazione+classe, minOsservazione+2*classe, maxOsservazione)
+frelclassiItalia <-table (cut (utenti_nazione, breaks = classi,right = FALSE ))/ length (utenti_nazione)
+FcumI <-cumsum (frelclassiItalia)
+num<-0
+for (i in 1:length(utenti_nazione)){
+  if(utenti_nazione[i]==maxOsservazione)
+    num<-num+1
+}
+if (num>0){
+  FcumI [3] <-FcumI [3]+ num/length(utenti_nazione)
+}
+
 png("grafici/funzionedidistribuzioneItalia.png")
 ascisse<-c(0, classi, maxOsservazione+100)
 ordinate <-c(0, 0, FcumI [1:3] ,1)
@@ -70,7 +77,6 @@ axis (1, format(ascisse, digits=2))
 axis (2, format(FcumI, digits=2))
 box()
 dev.off()
-
 
 
 
@@ -91,14 +97,15 @@ summary(utenti_campania)
 summary(utenti_nazione)
 
 #confronto istogrammi e ricavo la moda
+classi<-c(0, 500, 1000, 1500, 2000, 2500)
 fclassiCampania <-table (cut (utenti_campania, breaks = classi,right = FALSE, dig.lab = 10))
 for (i in 1:length(utenti_campania)){
-  if(utenti_campania[i]==maxOsservazione)
+  if(utenti_campania[i]==2500)
     fclassiCampania[3]<-fclassiCampania[3]+1
 }
 fclassiItalia <-table (cut (utenti_nazione, breaks = classi,right = FALSE, dig.lab=10))
 for (i in 1:length(utenti_nazione)){
-  if(utenti_nazione[i]==maxOsservazione)
+  if(utenti_nazione[i]==2500)
     fclassiItalia[3]<-fclassiItalia[3]+1
 }
 
