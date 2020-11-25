@@ -1,8 +1,9 @@
-round(utenti_per_regione_e_anno[,-1],0)
-df<-utenti_per_regione_e_anno[,-1]
+df<-round(utenti_per_regione_e_anno[,-1],0)
+row.names(df)<-utenti_per_regione_e_anno[,1]
 
 options("scipen"=100, "digits"=4)
-#regressione lineare
+
+#regressione lineare semplice
 png("grafici/bivariata/scatterPlotUtenti2020_2019.png")
 plot(df$"2019", df$"2020", main="2020 in funzione di 2019", col="blue",
       xlab="2019", ylab="2020")

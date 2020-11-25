@@ -30,18 +30,13 @@ dev.off()
 #funzione di distribuzione continua 
 minOsservazione = min(utenti_campania)
 maxOsservazione = max(utenti_campania)
+frequenza<-table(utenti_campania)/length(utenti_campania)
+lung<-length(frequenza)
 classe<-round((maxOsservazione-minOsservazione)/3, digits=0)
 classi<-c(minOsservazione, minOsservazione+classe, minOsservazione+2*classe, maxOsservazione)
 frelclassi <-table (cut (utenti_campania, breaks = classi,right = FALSE ))/ length (utenti_campania)
 Fcum <-cumsum (frelclassi)
-num<-0;
-for (i in 1:length(utenti_campania)){
-  if(utenti_campania[i]==maxOsservazione)
-    num<-num+1
-}
-if (num>0){
-  Fcum [3] <-Fcum [3]+ num/length(utenti_campania)
-}
+Fcum[3]<-Fcum[3]+frequenza[lung]
 png("grafici/funzionedidistribuzioneCampania.png")
 ascisse<-c(0, classi, maxOsservazione+100)
 ordinate <-c(0, 0, Fcum [1:3] ,1)
@@ -55,18 +50,14 @@ dev.off()
 
 minOsservazione = min(utenti_nazione)
 maxOsservazione = max(utenti_nazione)
+frequenza<-table(utenti_nazione)/length(utenti_nazione)
+lung<-length(frequenza)
 classe<-round((maxOsservazione-minOsservazione)/3, digits=0)
 classi<-c(minOsservazione, minOsservazione+classe, minOsservazione+2*classe, maxOsservazione)
 frelclassiItalia <-table (cut (utenti_nazione, breaks = classi,right = FALSE ))/ length (utenti_nazione)
 FcumI <-cumsum (frelclassiItalia)
+FcumI[3]<-FcumI[3]+frequenza[lung]
 num<-0
-for (i in 1:length(utenti_nazione)){
-  if(utenti_nazione[i]==maxOsservazione)
-    num<-num+1
-}
-if (num>0){
-  FcumI [3] <-FcumI [3]+ num/length(utenti_nazione)
-}
 
 png("grafici/funzionedidistribuzioneItalia.png")
 ascisse<-c(0, classi, maxOsservazione+100)
@@ -110,10 +101,10 @@ for (i in 1:length(utenti_nazione)){
 }
 
 png("grafici/istogrammaClassiCampania.png")
-barplot(fclassiCampania, main="Istogramma delle frequenze delle classi in Campania", col=rainbow(3))
+hist(utenti_campania, breaks=classi, col=rainbow(3), main="Istogramma delle frequenze delle classi in Campania")
 dev.off()
 png("grafici/istogrammaClassiItalia.png")
-barplot(fclassiItalia, main="Istogramma delle frequenze delle classi in Italia", col=rainbow(3))
+hist(utenti_nazione, breaks=classi, col=rainbow(3), main="Istogramma delle frequenze delle classi in Italia")
 dev.off()
 
 
