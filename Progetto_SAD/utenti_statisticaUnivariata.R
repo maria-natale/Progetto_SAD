@@ -1,7 +1,7 @@
 #prendo i dati relativi alla Campania e la media nazionale degli utenti negli anni
-#install.packages("openxlsx")
-#library(openxlsx)
-#utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
+install.packages("xlsx")
+library(xlsx)
+utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
 
 round(utenti_per_regione_e_anno[,-1],0)
 for (i in 1:dim(utenti_per_regione_e_anno)[1]){

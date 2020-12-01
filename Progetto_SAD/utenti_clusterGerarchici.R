@@ -1,4 +1,5 @@
-library(openxlsx)
+install.packages("xlsx")
+library(xlsx)
 utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
 
 Z<-round(utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno)-1,-1],0)
