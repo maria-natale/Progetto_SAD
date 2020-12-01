@@ -1,5 +1,5 @@
 library(openxlsx)
-Vittime_per_regione_e_anno <-read.xlsx("vittime_per_regione_e_anno.xlsx")
+Vittime_per_regione_e_anno=read.xlsx("vittime_per_regione_e_anno.xlsx")
 
 
 
