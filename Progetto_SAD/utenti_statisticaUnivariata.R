@@ -1,5 +1,7 @@
 #prendo i dati relativi alla Campania e la media nazionale degli utenti negli anni
-#matrixUtenti<-as.matrix(utenti_per_regione_e_anno)
+#install.packages("openxlsx")
+#library(openxlsx)
+#utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
 
 round(utenti_per_regione_e_anno[,-1],0)
 for (i in 1:dim(utenti_per_regione_e_anno)[1]){
@@ -116,6 +118,20 @@ boxplot(utenti_nazione, col="red", main="Boxplot utenti in Italia")
 boxplot(utenti_campania, col="blue", main="Boxplot utenti in Campania")
 dev.off()
 
+
+#quantili con i differenti algoritmi di R
+tipiquartili=function (x){
+  y = numeric (0)
+  for (i in 1:9) {
+    y <- rbind (y ,c( quantile (x ,0 , type = i) , quantile (x ,0.25 , type =i),
+                      quantile (x ,0.5 , type =i) , quantile (x ,0.75 , type =i ) 
+                      ,quantile (x ,1 , type =i ))) }
+  rownames (y)=paste ( " type " ,1:9)
+  y}
+quartiliCampania<-tipiquartili(utenti_campania)
+quartiliItalia<-tipiquartili(utenti_nazione)
+
+#indici di dispersione
 var(utenti_campania)
 sd(utenti_campania)
 coefficienteVariazioneCampania<-sd(utenti_campania)/abs(mean(utenti_campania))

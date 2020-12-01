@@ -1,3 +1,6 @@
+library(openxlsx)
+utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
+
 df<-round(utenti_per_regione_e_anno[,-1],0)
 row.names(df)<-utenti_per_regione_e_anno[,1]
 
