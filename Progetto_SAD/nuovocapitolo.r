@@ -1,3 +1,7 @@
+library(openxlsx)
+Vittime_per_regione_e_anno=read.xlsx("vittime_per_regione_e_anno.xlsx")
+
+
 ##2020 in funzione 2019 
 dataframe=round(Vittime_per_regione_e_anno[,-1],0)
 row.names(dataframe)=Vittime_per_regione_e_anno[,1]
