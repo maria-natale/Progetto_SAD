@@ -1,3 +1,9 @@
+library(openxlsx)
+Vittime_per_regione_e_anno <-read.xlsx("vittime_per_regione_e_anno.xlsx")
+
+
+
+
 z=round(Vittime_per_regione_e_anno[1:nrow(Vittime_per_regione_e_anno)-1,-1],0)
 row.names(z)=Vittime_per_regione_e_anno[1:nrow(Vittime_per_regione_e_anno)-1,1]
 n=nrow(z)
@@ -36,7 +42,7 @@ plot(hmed,hang=-1,xlab = "agglomerativo mediana",sub=" ")
 rect.hclust(hmed,k=2,border = "green")
 axis(side=4,at=round(c(0,hls$height),2))
 
-# non omogeneità
+# non omogeneitÃ 
 n=nrow(z)
 trh=(n-1)*sum(apply(z,2,var))
 
@@ -79,7 +85,7 @@ tagliolist=list(taglio)
 agvar = aggregate (z, tagliolist , var)[, -1]
 trh1 =(num [[1]]-1) * sum (agvar [1, ])
 trh2 =(num [[2]]-1) * sum (agvar [2, ])
-trb=trh-trh1-trh2 #misura non omogeneità cluster
+trb=trh-trh1-trh2 #misura non omogeneitÃ  cluster
 rapportoLegameCompleto=trb/trh
 
 #legame medio
@@ -89,7 +95,7 @@ tagliolist=list(taglio)
 agvar = aggregate (z, tagliolist , var)[, -1]
 trh1 =(num [[1]]-1) * sum (agvar [1, ])
 trh2 =(num [[2]]-1) * sum (agvar [2, ])
-trb=trh-trh1-trh2#misura non omogeneità cluster
+trb=trh-trh1-trh2#misura non omogeneitÃ  cluster
 rapportoLegameMedio=trb/trh
 
 #metodo centroide
@@ -99,7 +105,7 @@ tagliolist=list(taglio)
 agvar = aggregate (z, tagliolist , var)[, -1]
 trh1 =(num [[1]]-1) * sum (agvar [1, ])
 trh2 =(num [[2]]-1) * sum (agvar [2, ])
-trb=trh-trh1-trh2 #misura di non omogeneità tra i cluster
+trb=trh-trh1-trh2 #misura di non omogeneitÃ  tra i cluster
 rapportoCentroide=trb/trh
 centroidiIniziali =aggregate (z, tagliolist , mean )[,-1]
 
@@ -110,7 +116,7 @@ tagliolist=list(taglio)
 agvar = aggregate (z, tagliolist , var)[, -1]
 trh1 =(num [[1]]-1) * sum (agvar [1, ])
 trh2 =(num [[2]]-1) * sum (agvar [2, ])
-trb=trh-trh1-trh2 #misura di non omogeneità tra i cluster
+trb=trh-trh1-trh2 #misura di non omogeneitÃ  tra i cluster
 rapportoMediana=trb/trh
 
 #metodo kmeans
