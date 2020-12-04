@@ -1,7 +1,7 @@
 png("grafici/densitàdistribuzioneEsponenziale.png")
 par ( mfrow =c(1 ,2) )
-curve ( dexp(x,rate=3) ,from =0, to=10, xlab="x", ylab="f(x)",main=" lambda=3")
-curve ( pexp(x,rate=3) ,from =-2, to =10, xlab="x",ylab= expression (P(X<=x)),main=" lambda=3")
+curve ( dexp(x,rate=3) ,from =0, to=9, xlab="x", ylab="f(x)",main=" lambda=3")
+curve ( pexp(x,rate=3) ,from =-3, to =9, xlab="x",ylab= expression (P(X<=x)),main=" lambda=3")
 dev.off()
 
 png("grafici/rappresentazioneProbEsponenziale.png")
