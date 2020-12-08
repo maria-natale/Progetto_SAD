@@ -30,6 +30,7 @@ text(x, y=utenti_nazione, pos = 3, labels = utenti_nazione, col="red")
 dev.off()
 
 #funzione di distribuzione continua 
+
 minOsservazione = min(utenti_campania)
 maxOsservazione = max(utenti_campania)
 frequenza<-table(utenti_campania)/length(utenti_campania)
@@ -39,6 +40,7 @@ classi<-c(minOsservazione, minOsservazione+classe, minOsservazione+2*classe, max
 frelclassi <-table (cut (utenti_campania, breaks = classi,right = FALSE ))/ length (utenti_campania)
 Fcum <-cumsum (frelclassi)
 Fcum[3]<-Fcum[3]+frequenza[lung]
+
 png("grafici/funzionedidistribuzioneCampania.png")
 ascisse<-c(0, classi, maxOsservazione+100)
 ordinate <-c(0, 0, Fcum [1:3] ,1)
