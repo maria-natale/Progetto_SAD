@@ -23,13 +23,10 @@ ca<-stimatheta/(1-qnorm (1- alpha /2,mean =0, sd =1) / sqrt(n))
 
 alpha <-1 -0.99
 n2<-length(camp2)
-stimatheta2<-1.0 /mean (camp2)
+n<-lenght(camp)
 media1<-mean(camp)
 media2<-mean(camp2)
-#rad <-sqrt(1/(n*(1/stimatheta^2))+1/(n2*(1/stimatheta2^2)))
 rad<-sqrt(1/(media1^2*n)+1/(media2^2*n2))
-#cb<-stimatheta-stimatheta2-qnorm (1-alpha /2, mean =0, sd =1)*rad
-#ca<-stimatheta-stimatheta2+qnorm (1-alpha /2, mean =0, sd =1)*rad
 cb<-media1-media2-qnorm (1-alpha /2, mean =0, sd =1)*rad
 ca<-media1-media2+qnorm (1-alpha /2, mean =0, sd =1)*rad
 
