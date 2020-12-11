@@ -16,6 +16,7 @@ for (i in 1:dim(utenti_per_regione_e_anno)[1]){
 matrixNumeric<-as.matrix(utenti_per_regione_e_anno[,2:dim(utenti_per_regione_e_anno)[2]])
 utenti_nazione<-round(utenti_nazione,0)
 
+
 #creo barplot per Campania e media nazionale
 png("grafici/chiamateEffettuateUtentiCampaniaFrequenza.png")
 x<-barplot(utenti_campania, xlab="Anni", ylab="Numero di chiamate effettuate", ylim=c(0,1800), col=1:9,
@@ -29,8 +30,16 @@ x<-barplot(utenti_nazione, xlab="Anni", ylab="Numero di chiamate effettuate", yl
 text(x, y=utenti_nazione, pos = 3, labels = utenti_nazione, col="red")
 dev.off()
 
-#funzione di distribuzione continua 
+png("grafici/paretoUtentiCampania.png")
+ord<-sort(utenti_campania, decreasing=TRUE)
+propOrd <- prop.table (ord)
+x <- barplot (propOrd , ylim = c(0, 1.05) , main = " Diagramma  diPareto ", col =1:8 , las =2)
+lines (x, cumsum ( propOrd ), type = "b", pch = 16)
+text(x - 0.2, cumsum ( propOrd ) + 0.03 , paste (format ( cumsum ( propOrd
+) * 100, digits = 2) , "%"))
+dev.off()
 
+#funzione di distribuzione continua 
 minOsservazione = min(utenti_campania)
 maxOsservazione = max(utenti_campania)
 frequenza<-table(utenti_campania)/length(utenti_campania)
