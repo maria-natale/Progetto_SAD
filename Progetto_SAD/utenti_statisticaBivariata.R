@@ -2,8 +2,8 @@ install.packages("xlsx")
 library(xlsx)
 utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
 
-df<-round(utenti_per_regione_e_anno[,-1],0)
-row.names(df)<-utenti_per_regione_e_anno[,1]
+df<-round(utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno)-1,-1],0)
+row.names(df)<-utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno)-1,1]
 
 options("scipen"=100, "digits"=4)
 
@@ -43,6 +43,16 @@ plot(df$"2019", residui, main="Diagramma dei residui", xlab="2019", ylab="Residu
 abline (h=0, col ="magenta",lty=2)
 dev.off()
 
+residui<-linearmodel$residuals
+residuistandard<-residui/sd(residui)
+residuistandard
+
+png("grafici/bivariata/scatterPlotUtenti2020_2019DiagrammaResiduiStandard.png")
+stime<-linearmodel$fitted.values
+plot(stime, residuistandard, main="Residui standardizzati rispetto ai valori stimati", xlab="valori stimati"
+     , ylab="Residui standard", pch=5, col="blue")
+abline (h=0, col ="magenta",lty =2)
+dev.off()
 
 #regressione lineare multipla
 
