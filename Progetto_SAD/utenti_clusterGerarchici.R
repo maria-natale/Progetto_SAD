@@ -1,12 +1,14 @@
 install.packages("xlsx")
-library(xlsx)
-utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
+#library(xlsx)
+#utenti_per_regione_e_anno <-read.xlsx("utenti_per_regione_e_anno.xlsx")
 
 Z<-round(utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno)-1,-1],0)
 row.names(Z)<-utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno)-1,1]
 n<-nrow(Z)
 
+Z<-scale(Z)
 d<-dist(Z, method="euclidean", diag=TRUE, upper=TRUE)
+
 
 #metodo del legame singolo
 hls<-hclust(d, method="single")
