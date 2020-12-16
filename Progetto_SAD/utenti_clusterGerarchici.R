@@ -9,6 +9,16 @@ n<-nrow(Z)
 Z<-scale(Z)
 d<-dist(Z, method="euclidean", diag=TRUE, upper=TRUE)
 
+stirling2 <-function (n,m){
+  s<-0
+  if ((m >=1)&(m <=n)){
+    for (k in seq (0,m)){
+      s<-s+( choose (m,k)*(-1)^k*(m-k)^n/ factorial (m))}
+    return (c(s))
+  }
+}
+
+stirling2(nrow(Z),2)
 
 #metodo del legame singolo
 hls<-hclust(d, method="single")

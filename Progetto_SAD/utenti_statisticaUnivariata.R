@@ -13,7 +13,9 @@ for (i in 1:dim(utenti_per_regione_e_anno)[1]){
   }
 }
 
-matrixNumeric<-as.matrix(utenti_per_regione_e_anno[,2:dim(utenti_per_regione_e_anno)[2]])
+matrixNumeric<-as.matrix(round(utenti_per_regione_e_anno[,2:dim(utenti_per_regione_e_anno)[2]]),0)
+colnames(matrixNumeric)<-c("2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020")
+rownames(matrixNumeric)<-utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno),1]
 utenti_nazione<-round(utenti_nazione,0)
 
 
@@ -30,12 +32,30 @@ x<-barplot(utenti_nazione, xlab="Anni", ylab="Numero di chiamate effettuate", yl
 text(x, y=utenti_nazione, pos = 3, labels = utenti_nazione, col="red")
 dev.off()
 
+#diagramma di Pareto
 png("grafici/paretoUtentiCampania.png")
-ord<-sort(utenti_campania, decreasing=TRUE)
+tableCamp<-table(c(rep("2013", utenti_campania[1]), rep("2014",utenti_campania[2]), rep("2015",utenti_campania[3]),
+             rep("2016",utenti_campania[4]), rep("2017",utenti_campania[5]), rep("2018",utenti_campania[6]),
+             rep("2019",utenti_campania[7]), rep("2020",utenti_campania[8])))
+#ord<-sort(t(matrixNumeric[17, ]), decreasing=TRUE)
+ord<-sort(tableCamp, decreasing = TRUE)
 propOrd <- prop.table (ord)
-x <- barplot (propOrd , ylim = c(0, 1.05) , main = " Diagramma  diPareto ", col =1:8 , las =2)
+x <- barplot (propOrd , ylim = c(0, 1.05) , main = "Diagramma di Pareto Campania", col =1:8 , las =2)
 lines (x, cumsum ( propOrd ), type = "b", pch = 16)
-text(x - 0.2, cumsum ( propOrd ) + 0.03 , paste (format ( cumsum ( propOrd
+text(x - 0.2, cumsum (propOrd) + 0.03 , paste (format ( cumsum ( propOrd
+) * 100, digits = 2) , "%"))
+dev.off()
+
+png("grafici/paretoUtentiItalia.png")
+tableNaz<-table(c(rep("2013", utenti_nazione[1]), rep("2014",utenti_nazione[2]), rep("2015",utenti_nazione[3]),
+                   rep("2016",utenti_nazione[4]), rep("2017",utenti_nazione[5]), rep("2018",utenti_nazione[6]),
+                   rep("2019",utenti_nazione[7]), rep("2020",utenti_nazione[8])))
+#ord<-sort(t(matrixNumeric[17, ]), decreasing=TRUE)
+ord<-sort(tableNaz, decreasing = TRUE)
+propOrd <- prop.table (ord)
+x <- barplot (propOrd , ylim = c(0, 1.05) , main = "Diagramma di Pareto Italia", col =1:8 , las =2)
+lines (x, cumsum ( propOrd ), type = "b", pch = 16)
+text(x - 0.2, cumsum (propOrd) + 0.03 , paste (format ( cumsum ( propOrd
 ) * 100, digits = 2) , "%"))
 dev.off()
 
@@ -173,4 +193,22 @@ skw(utenti_nazione)
 
 curt(utenti_campania)
 curt(utenti_nazione)
+
+matrixNumeric2020<-round(as.matrix(utenti_per_regione_e_anno[,dim(utenti_per_regione_e_anno)[2]]),0)
+matrixNumeric2019<-round(as.matrix(utenti_per_regione_e_anno[,dim(utenti_per_regione_e_anno)[2]-1]),0)
+matrix<-cbind(matrixNumeric2019, matrixNumeric2020)
+colnames(matrix)<-c("2019", "2020")
+rownames(matrix)<-utenti_per_regione_e_anno[1:nrow(utenti_per_regione_e_anno),1]
+matrix1<-matrix[1:round(nrow(matrix)/3,0),]
+matrix2<-matrix[(round(nrow(matrix)/3,0)+1):round(nrow(matrix)/3*2,0),]
+matrix3<-matrix[(round(nrow(matrix)/3*2,0)+1):nrow(matrix),]
+png("grafici/confrontoRegioni20192020.png", width=1000)
+x<-barplot(t(matrix1), beside=TRUE, main="Frequenze assolute congiunte 2019 e 2020", col=c("green", "blue"))
+dev.off()
+png("grafici/confrontoRegioni20192020_2.png", width=1000)
+x<-barplot(t(matrix2), beside=TRUE, main="Frequenze assolute congiunte 2019 e 2020", col=c("green", "blue"))
+dev.off()
+png("grafici/confrontoRegioni20192020_3.png", width=1000)
+x<-barplot(t(matrix3), beside=TRUE, main="Frequenze assolute congiunte 2019 e 2020", col=c("green", "blue"))
+dev.off()
 
