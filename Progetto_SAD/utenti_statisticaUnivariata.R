@@ -37,7 +37,6 @@ png("grafici/paretoUtentiCampania.png")
 tableCamp<-table(c(rep("2013", utenti_campania[1]), rep("2014",utenti_campania[2]), rep("2015",utenti_campania[3]),
              rep("2016",utenti_campania[4]), rep("2017",utenti_campania[5]), rep("2018",utenti_campania[6]),
              rep("2019",utenti_campania[7]), rep("2020",utenti_campania[8])))
-#ord<-sort(t(matrixNumeric[17, ]), decreasing=TRUE)
 ord<-sort(tableCamp, decreasing = TRUE)
 propOrd <- prop.table (ord)
 x <- barplot (propOrd , ylim = c(0, 1.05) , main = "Diagramma di Pareto Campania", col =1:8 , las =2)
@@ -50,7 +49,6 @@ png("grafici/paretoUtentiItalia.png")
 tableNaz<-table(c(rep("2013", utenti_nazione[1]), rep("2014",utenti_nazione[2]), rep("2015",utenti_nazione[3]),
                    rep("2016",utenti_nazione[4]), rep("2017",utenti_nazione[5]), rep("2018",utenti_nazione[6]),
                    rep("2019",utenti_nazione[7]), rep("2020",utenti_nazione[8])))
-#ord<-sort(t(matrixNumeric[17, ]), decreasing=TRUE)
 ord<-sort(tableNaz, decreasing = TRUE)
 propOrd <- prop.table (ord)
 x <- barplot (propOrd , ylim = c(0, 1.05) , main = "Diagramma di Pareto Italia", col =1:8 , las =2)
