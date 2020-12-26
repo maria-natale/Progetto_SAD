@@ -18,7 +18,7 @@ qexp(z, rate =3)
 
 png("grafici/densitaEsponenzialeESimulata.png")
 par ( mfrow =c(2 ,2))
-curve ( dexp(x,rate=3) ,from =0, to=10, xlab="x", ylab="f(x)",main="Densità di probabilità geometrica")
+curve ( dexp(x,rate=3) ,from =0, to=10, xlab="x", ylab="f(x)",main="Densità di probabilità esponenziale")
 sim<-rexp(50, rate =3)
 hist(sim,freq=F,xlim =c(0 ,8) ,ylim =c(0 ,2) ,breaks =100 , xlab ="x", ylab=" Istogramma ",main=" Densita simulata ,N =50 ")
 sim<-rexp(500, rate =3)
